@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rishhhh's INN</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header>
+  <div class="logo">Rishhhh's INN</div>
+  <nav>
+  <nav>
+  <a href="rooms.html">Rooms</a>
+  <a href="dining.html">Dining</a>
+  <a href="spa.html">Spa</a>
+  <a href="contact.html">Contact</a>
+</nav>
+  </nav>
+</header>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="overlay">
+    <h1>Welcome to <br> <span>Pure Luxury & Comfort</span></h1>
+    <p>Experience refined accommodations tailored for discerning guests</p>
+    <button onclick="scrollToBooking()">CHECK AVAILABILITY</button>
+
+<script>
+function scrollToBooking() {
+  document.querySelector(".booking").scrollIntoView({
+    behavior: "smooth"
+  });
+}
+</script>
+  </div>
+</section>
+
+<!-- ROOMS SECTION -->
+<section class="rooms">
+  <h2>Our Exclusive Rooms & Suites</h2>
+
+  <div class="room-container">
+    <div class="card">
+      <img src="room1.jpg">
+      <h3>Deluxe Room</h3>
+    </div>
+
+    <div class="card">
+      <img src="room2.jpg">
+      <h3>Junior Suite</h3>
+    </div>
+
+    <div class="card">
+      <img src="room3.jpg">
+      <h3>Executive Suite</h3>
+    </div>
+    <div class="card">
+    <img src="room4.jpg">
+    <h3>Luxury Suite</h3>
+  </div>
+
+  <div class="card">
+    <img src="room5.jpg">
+    <h3>Ocean View</h3>
+  </div>
+
+  <div class="card">
+    <img src="room6.jpg">
+    <h3>Family Room</h3>
+  </div>
+
+</div>
+
+</section>
+
+<!-- BOOKING BAR -->
+<section class="booking">
+  <input type="date">
+  <input type="date">
+  <input type="number" placeholder="Guests">
+  <button>Find Room</button>
+</section>
+
+<div id="chatbot">
+  <div id="chat-header">Chat 💬</div>
+  <div id="chat-body"></div>
+  <input type="text" id="userInput" placeholder="Type here...">
+</div>
+
+<script>
+const input = document.getElementById("userInput");
+const chatBody = document.getElementById("chat-body");
+
+input.addEventListener("keypress", async function(e) {
+  if (e.key === "Enter") {
+    let userText = input.value;
+
+    chatBody.innerHTML += `<p>You: ${userText}</p>`;
+
+    try {
+      let response = await fetch("http://localhost:3000/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: userText })
+      });
+
+      let data = await response.json();
+      chatBody.innerHTML += `<p>Bot: ${data.reply}</p>`;
+    } catch (error) {
+      chatBody.innerHTML += `<p>Bot: Server not running ❌</p>`;
+    }
+
+    input.value = "";
+  }
+});
+</script>
+
+</body>
+</html>

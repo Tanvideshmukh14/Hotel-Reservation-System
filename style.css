@@ -1,0 +1,152 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; 
+}
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #0b0b0f;
+  color: white;
+}
+
+/* NAVBAR */
+header {
+ position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  box-sizing: border-box; /* 🔥 important */
+}
+
+nav a {
+  margin-left: 20px;
+  color: rgb(246, 249, 67);
+  text-decoration: none;
+  font-size: 20px;
+  
+}
+
+/* HERO */
+.hero {
+  height: 100vh;
+  background: url('hotel.jpg') no-repeat center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  text-align: center;
+  background: rgba(0,0,0,0.5);
+  padding: 40px;
+}
+
+.overlay h1 {
+  font-size: 48px;
+}
+
+.overlay span {
+  color: gold;
+}
+
+.overlay button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  background: gold;
+  border: none;
+  cursor: pointer;
+}
+
+/* ROOMS */
+.rooms {
+  padding: 60px;
+  text-align: center;
+}
+
+.room-container {
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding:40px;
+ 
+}
+.card {
+  background: #111;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card h3 {
+  padding: 10px;
+  text-align: center;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}/* BOOKING */
+.booking {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px;
+}
+
+.booking input, .booking button {
+  padding: 10px;
+}
+
+@media (max-width: 900px) {
+  .room-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .room-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+#chatbot {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 260px;
+  background: #111;
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  z-index: 9999; /* 🔥 ensures it's visible */
+}
+
+#chat-header {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#chat-body {
+  height: 150px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+#userInput {
+  width: 100%;
+  padding: 5px;
+}
