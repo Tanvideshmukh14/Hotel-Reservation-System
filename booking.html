@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Booking</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1 class="section-title">Book Your Room</h1>
+
+<div class="card" style="max-width:400px; margin:auto;">
+  <img id="roomImg">
+  <h2 id="roomName"></h2>
+  <p id="roomPrice"></p>
+
+  <input type="text" placeholder="Your Name"><br><br>
+  <input type="date"><br><br>
+  <input type="date"><br><br>
+
+  <button>Confirm Booking</button>
+</div>
+
+<script>
+// get data
+document.getElementById("roomName").innerText =
+  localStorage.getItem("roomName");
+
+document.getElementById("roomImg").src =
+  localStorage.getItem("roomImage");
+
+document.getElementById("roomPrice").innerText =
+  "Price: ₹" + localStorage.getItem("roomPrice") + " / night";
+</script>
+
+</body>
+</html>

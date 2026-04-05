@@ -17,7 +17,7 @@
     <a href="rooms.html">Rooms</a>
     <a href="dining.html">Dining</a>
     <a href="spa.html">Spa</a>
-    <a href="booking.html">Book</a>
+   
   </div>
 </div>
 
@@ -26,39 +26,81 @@
 <div class="room-container">
 
   <div class="card">
-    <img src="Assets/room1.jpg">
-    <h3>Deluxe Room</h3>
-  </div>
+  <img src="assets/room1.jpg">
+  <h3>Deluxe Room</h3>
+  <p>₹3000 / night</p>
 
-  <div class="card">
-    <img src="Assets/room2.jpg">
-    <h3>Junior Suite</h3>
-  </div>
+  <button onclick="bookRoom('Deluxe Room', 'assets/room1.jpg', 3000)">
+    Book Now
+  </button>
+</div>
 
-  <div class="card">
-    <img src="Assets/room3.jpg">
-    <h3>Executive Suite</h3>
-  </div>
+<div class="card">
+  <img src="assets/room2.jpg">
+  <h3>Junior Suite</h3>
+  <p>₹2000 / night</p>
 
-  <div class="card">
-    <img src="Assets/room4.jpg">
-    <h3>Luxury Suite</h3>
-  </div>
+  <button onclick="bookRoom('Junior Suite', 'assets/room2.jpg', 2000)">
+    Book Now
+  </button>
+</div>
 
-  <div class="card">
-    <img src="Assets/room5.jpg">
-    <h3>Ocean View</h3>
-  </div>
+<div class="card">
+  <img src="assets/room3.jpg">
+  <h3>Executive Suite</h3>
+  <p>₹4000 / night</p>
 
-  <div class="card">
-    <img src="Assets/room6.jpg">
-    <h3>Family Room</h3>
-  </div>
+  <button onclick="bookRoom('Executive Suite', 'assets/room3.jpg', 4000)">
+    Book Now
+  </button>
+</div>
+
+ <div class="card">
+  <img src="assets/room4.jpg">
+  <h3>Luxury Suite</h3>
+  <p>₹5000 / night</p>
+
+  <button onclick="bookRoom('Luxury Suite', 'assets/room4.jpg', 5000)">
+    Book Now
+  </button>
+</div>
+
+<div class="card">
+  <img src="assets/room5.jpg">
+  <h3>Ocean View</h3>
+  <p>₹3000 / night</p>
+
+  <button onclick="bookRoom('Ocean View', 'assets/room5.jpg', 3000)">
+    Book Now
+  </button>
+</div>
+
+ <div class="card">
+  <img src="assets/room6.jpg">
+  <h3>Family Room</h3>
+  <p>₹3000 / night</p>
+
+  <button onclick="bookRoom('Family Room', 'assets/room6.jpg', 3000)">
+    Book Now
+  </button>
 </div>
 
 <script>
 function toggleMenu() {
   document.getElementById("navLinks").classList.toggle("active");
+}
+</script>
+
+
+<script>
+function bookRoom(name, image, price) {
+  // store data
+  localStorage.setItem("roomName", name);
+  localStorage.setItem("roomImage", image);
+  localStorage.setItem("roomPrice", price);
+
+  // redirect
+  window.location.href = "booking.html";
 }
 </script>
 

@@ -218,3 +218,12 @@ nav a {
 .nav-links a:hover {
   color: gold;
 }
+
+.card button {
+  margin: 10px;
+  padding: 10px;
+  background: gold;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
