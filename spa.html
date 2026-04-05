@@ -1,42 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Spa</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<div class="navbar">
+  <h2 class="logo">Hotel</h2>
+
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="rooms.html">Rooms</a>
+    <a href="dining.html">Dining</a>
+    <a href="spa.html">Spa</a>
+    <a href="booking.html">Book</a>
+  </div>
+</div>
+
 <h1 style="text-align:center;">Luxury Spa</h1>
 
 <div class="room-container">
   <div class="card">
-    <img src="spa1.jpg">
+    <img src="Assets/spa1.jpg">
     <h3>Relax Therapy</h3>
   </div>
 
   <div class="card">
-    <img src="spa2.jpg">
+    <img src="Assets/spa2.jpg">
     <h3>Massage Room</h3>
   </div>
 
 
   <div class="card">
-    <img src="spa3.jpg">
+    <img src="Assets/spa3.jpg">
     <h3>Steam Bath</h3>
   </div>
 
   <div class="card">
-    <img src="spa4.jpg">
+    <img src="Assets/spa4.jpg">
     <h3>Aroma Therapy</h3>
   </div>
 
   <div class="card">
-    <img src="spa5.jpg">
+    <img src="Assets/spa5.jpg">
     <h3>Luxury Spa Suite</h3>
   </div>
 
 
 </div>
+
+<script>
+function toggleMenu() {
+  document.getElementById("navLinks").classList.toggle("active");
+}
+</script>
 
 </body>
 </html>

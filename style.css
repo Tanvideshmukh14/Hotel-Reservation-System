@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 html, body {
   margin: 0;
   padding: 0;
@@ -38,7 +43,7 @@ nav a {
 /* HERO */
 .hero {
   height: 100vh;
-  background: url('hotel.jpg') no-repeat center/cover;
+  background: url('assets/hotel.jpg') no-repeat center/cover;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,6 +116,13 @@ nav a {
   padding: 10px;
 }
 
+.section-title {
+  text-align: center;
+  font-size: 40px;
+  color: white;
+  margin-bottom: 30px;
+}
+
 @media (max-width: 900px) {
   .room-container {
     grid-template-columns: repeat(2, 1fr);
@@ -149,4 +161,60 @@ nav a {
 #userInput {
   width: 100%;
   padding: 5px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111;
+  color: white;
+  padding: 15px 20px;
+}
+
+.logo {
+  font-size: 22px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Mobile menu */
+.menu-icon {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    background: #111;
+    top: 60px;
+    right: 0;
+    width: 200px;
+    padding: 10px;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+}
+
+.nav-links a:hover {
+  color: gold;
 }

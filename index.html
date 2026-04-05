@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <title>Rishhhh's INN</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- NAVBAR -->
-<header>
-  <div class="logo">Rishhhh's INN</div>
-  <nav>
-  <nav>
-  <a href="rooms.html">Rooms</a>
-  <a href="dining.html">Dining</a>
-  <a href="spa.html">Spa</a>
-  <a href="contact.html">Contact</a>
-</nav>
-  </nav>
-</header>
+<div class="navbar">
+  <h2 class="logo">Hotel</h2>
+
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="rooms.html">Rooms</a>
+    <a href="dining.html">Dining</a>
+    <a href="spa.html">Spa</a>
+    <a href="booking.html">Book</a>
+  </div>
+</div>
 
 <!-- HERO SECTION -->
 <section class="hero">
@@ -43,31 +45,31 @@ function scrollToBooking() {
 
   <div class="room-container">
     <div class="card">
-      <img src="room1.jpg">
+      <img src="Assets/room1.jpg">
       <h3>Deluxe Room</h3>
     </div>
 
     <div class="card">
-      <img src="room2.jpg">
+      <img src="Assets/room2.jpg">
       <h3>Junior Suite</h3>
     </div>
 
     <div class="card">
-      <img src="room3.jpg">
+      <img src="Assets/room3.jpg">
       <h3>Executive Suite</h3>
     </div>
     <div class="card">
-    <img src="room4.jpg">
+    <img src="Assets/room4.jpg">
     <h3>Luxury Suite</h3>
   </div>
 
   <div class="card">
-    <img src="room5.jpg">
+    <img src="Assets/room5.jpg">
     <h3>Ocean View</h3>
   </div>
 
   <div class="card">
-    <img src="room6.jpg">
+    <img src="Assets/room6.jpg">
     <h3>Family Room</h3>
   </div>
 
@@ -117,6 +119,12 @@ input.addEventListener("keypress", async function(e) {
     input.value = "";
   }
 });
+</script>
+
+<script>
+function toggleMenu() {
+  document.getElementById("navLinks").classList.toggle("active");
+}
 </script>
 
 </body>

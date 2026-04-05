@@ -1,40 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dining</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<div class="navbar">
+  <h2 class="logo">Hotel</h2>
+
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="rooms.html">Rooms</a>
+    <a href="dining.html">Dining</a>
+    <a href="spa.html">Spa</a>
+    <a href="booking.html">Book</a>
+  </div>
+</div>
+
 <h1 style="text-align:center;">Premium Dining</h1>
 
 <div class="room-container">
   <div class="card">
-    <img src="dining1.jpg">
+    <img src="Assets/dining1.jpg">
     <h3>Luxury Restaurant</h3>
   </div>
 
   <div class="card">
-    <img src="dining2.jpg">
+    <img src="Assets/dining2.jpg">
     <h3>Buffet Experience</h3>
   </div>
 
    <div class="card">
-    <img src="dining3.jpg">
+    <img src="Assets/dining3.jpg">
     <h3>Fine Dining</h3>
   </div>
 
   <div class="card">
-    <img src="dining4.jpg">
+    <img src="Assets/dining4.jpg">
     <h3>Outdoor Dining</h3>
   </div>
 
   <div class="card">
-    <img src="dining5.jpg">
+    <img src="Assets/dining5.jpg">
     <h3>Chef Specials</h3>
   </div>
 
 </div>
+
+<script>
+function toggleMenu() {
+  document.getElementById("navLinks").classList.toggle("active");
+}
+</script>
 
 </body>
 </html>
