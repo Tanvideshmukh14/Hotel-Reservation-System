@@ -23,38 +23,36 @@
 
 <h1 style="text-align:center;">Premium Dining</h1>
 
-<div class="room-container">
-  <div class="card">
-    <img src="Assets/dining1.jpg">
-    <h3>Luxury Restaurant</h3>
-  </div>
-
-  <div class="card">
-    <img src="Assets/dining2.jpg">
-    <h3>Buffet Experience</h3>
-  </div>
-
-   <div class="card">
-    <img src="Assets/dining3.jpg">
-    <h3>Fine Dining</h3>
-  </div>
-
-  <div class="card">
-    <img src="Assets/dining4.jpg">
-    <h3>Outdoor Dining</h3>
-  </div>
-
-  <div class="card">
-    <img src="Assets/dining5.jpg">
-    <h3>Chef Specials</h3>
-  </div>
-
-</div>
+<div id="dining" class="room-container"></div>
 
 <script>
 function toggleMenu() {
   document.getElementById("navLinks").classList.toggle("active");
 }
+async function loadDining() {
+    const res = await fetch("http://localhost:8080/api/dining");
+    const data = await res.json();
+
+    let html = "";
+
+    data.forEach(dining => {
+        html += `
+        <div class="card">
+            <img src="${dining.imageUrl}">
+            <h3>${dining.type}</h3>
+            <p>₹${dining.price}</p>
+            <p>⭐ ${dining.rating}</p>
+
+            <button onclick="bookDining('${dining.type}', '${dining.imageUrl}', ${dining.price})">
+                Book Now
+            </button>
+        </div>`;
+    });
+
+    document.getElementById("dining").innerHTML = html;
+}
+
+loadDining();
 </script>
 
 </body>

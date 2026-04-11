@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Spa Booking</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="booking-page">
+
+<h1 class="section-title">Book Your Spa Session</h1>
+
+<div class="card">
+
+  <!-- Spa Details -->
+  <img id="spaImg">
+  <h2 id="spaName"></h2>
+  <p id="spaPrice"></p>
+
+  <!-- Booking Form -->
+  <form id="bookingForm">
+    <input type="text" id="name" placeholder="Your Name" required>
+
+    <input type="email" id="email" placeholder="Your Email" required>
+
+    <input type="date" id="checkIn" required>
+
+
+    <!-- Hidden values -->
+    <input type="hidden" id="spaType">
+    <input type="hidden" id="price">
+
+    <button type="submit">Confirm Booking</button>
+  </form>
+
+  <hr>
+  <br>
+
+<script>
+/* LOAD SPA DATA */
+const spaName = localStorage.getItem("spaName");
+const spaImage = localStorage.getItem("spaImage");
+const spaPrice = localStorage.getItem("spaPrice");
+
+document.getElementById("spaName").innerText = spaName;
+document.getElementById("spaImg").src = spaImage;
+document.getElementById("spaPrice").innerText = "Price: ₹" + spaPrice + " / session";
+
+document.getElementById("spaType").value = spaName;
+document.getElementById("price").value = spaPrice;
+
+/* FORM SUBMIT */
+document.getElementById("bookingForm").addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const booking = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        spaType: document.getElementById("spaType").value,
+        price: parseFloat(document.getElementById("price").value),
+        checkIn: document.getElementById("checkIn").value,
+       
+    };
+
+    try {
+        const res = await fetch("http://localhost:8080/api/bookings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(booking)
+        });
+
+        if (!res.ok) throw new Error("Server error");
+
+        await res.json();
+
+        alert("✅ Spa Booking Confirmed!");
+        document.getElementById("bookingForm").reset();
+
+    } catch (error) {
+        alert("❌ Backend not running!");
+    }
+
+});
+
+</script>
+</body>
+</html>

@@ -20,43 +20,40 @@
    
   </div>
 </div>
+<div id="spa" class="room-container"></div>
 
-<h1 style="text-align:center;">Luxury Spa</h1>
-
-<div class="room-container">
-  <div class="card">
-    <img src="Assets/spa1.jpg">
-    <h3>Relax Therapy</h3>
-  </div>
-
-  <div class="card">
-    <img src="Assets/spa2.jpg">
-    <h3>Massage Room</h3>
-  </div>
-
-
-  <div class="card">
-    <img src="Assets/spa3.jpg">
-    <h3>Steam Bath</h3>
-  </div>
-
-  <div class="card">
-    <img src="Assets/spa4.jpg">
-    <h3>Aroma Therapy</h3>
-  </div>
-
-  <div class="card">
-    <img src="Assets/spa5.jpg">
-    <h3>Luxury Spa Suite</h3>
-  </div>
-
-
-</div>
 
 <script>
 function toggleMenu() {
   document.getElementById("navLinks").classList.toggle("active");
 }
+
+
+async function loadSpa() {
+    const res = await fetch("http://localhost:8080/api/spa");
+    const data = await res.json();
+
+    let html = "";
+
+    data.forEach(spa => {
+        html += `
+        <div class="card">
+            <img src="${spa.imageUrl}">
+            <h3>${spa.type}</h3>
+            <p>₹${spa.price}</p>
+            <p>⭐ ${spa.rating}</p>
+
+            <button onclick="bookSpa('${spa.type}', '${spa.imageUrl}', ${spa.price})">
+                Book Now
+            </button>
+        </div>`;
+    });
+
+    document.getElementById("spa").innerHTML = html;
+}
+
+loadSpa();
+
 </script>
 
 </body>
