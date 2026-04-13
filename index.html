@@ -18,6 +18,7 @@
     <a href="rooms.html">Rooms</a>
     <a href="dining.html">Dining</a>
     <a href="spa.html">Spa</a>
+    <span id="authSection"></span>
   
   </div>
 </div>
@@ -85,11 +86,7 @@ function scrollToBooking() {
   <button>Find Room</button>
 </section>
 
-<div id="chatbot">
-  <div id="chat-header">Chat 💬</div>
-  <div id="chat-body"></div>
-  <input type="text" id="userInput" placeholder="Type here...">
-</div>
+
 
 <script>
 const input = document.getElementById("userInput");
@@ -125,6 +122,46 @@ input.addEventListener("keypress", async function(e) {
 function toggleMenu() {
   document.getElementById("navLinks").classList.toggle("active");
 }
+function renderAuth() {
+    const userId = localStorage.getItem("userId");
+    const userName = localStorage.getItem("userName");
+
+    const authDiv = document.getElementById("authSection");
+
+    if (!authDiv) return; // safety
+
+    if (userId) {
+        authDiv.innerHTML = `
+            <span style="margin-right:10px;">Hi, ${userName}</span>
+           <a href="myBookings.html">My Bookings</a>
+             <br>
+             <br>
+             <a onClick = "logout()">Logout</a>
+        `;
+    } else {
+        authDiv.innerHTML = `
+          <a onclick="goToLogin()">Login</a>
+
+        `;
+    }
+}
+
+function goToLogin() {
+    window.location.href = "login.html";
+}
+
+function goToMyBookings() {
+    window.location.href = "myBookings.html";
+}
+
+function logout() {
+    localStorage.clear();
+    alert("Logged out successfully!");
+    window.location.href = "index.html";
+}
+
+// 🔥 run when page loads
+document.addEventListener("DOMContentLoaded", renderAuth);
 </script>
 
 </body>

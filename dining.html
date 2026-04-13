@@ -11,13 +11,12 @@
   <h2 class="logo">Hotel</h2>
 
   <div class="menu-icon" onclick="toggleMenu()">☰</div>
-
-  <div class="nav-links" id="navLinks">
+    <div class="nav-links" id="navLinks">
     <a href="index.html">Home</a>
     <a href="rooms.html">Rooms</a>
     <a href="dining.html">Dining</a>
     <a href="spa.html">Spa</a>
-    
+    <div id="authSection"></div>
   </div>
 </div>
 
@@ -51,7 +50,63 @@ async function loadDining() {
 
     document.getElementById("dining").innerHTML = html;
 }
+function bookDining(name, image, price) {
 
+    const userId = localStorage.getItem("userId");
+
+    // ❌ Not logged in
+    if (!userId) {
+        alert("⚠️ Please login to book!");
+        window.location.href = "login.html";
+        return;
+    }
+
+    // ✅ Logged in → proceed
+    localStorage.setItem("diningName", name);
+    localStorage.setItem("diningImage", image);
+    localStorage.setItem("diningPrice", price);
+
+    window.location.href = "DiningBooking.html";
+}
+function renderAuth() {
+    const userId = localStorage.getItem("userId");
+    const userName = localStorage.getItem("userName");
+
+    const authDiv = document.getElementById("authSection");
+
+    if (!authDiv) return; // safety
+
+    if (userId) {
+        authDiv.innerHTML = `
+            
+             <a href="myBookings.html">My Bookings</a>
+             <br>
+             <br>
+             <a onClick = "logout()">Logout</a>
+        `;
+    } else {
+        authDiv.innerHTML = `
+            <a onclick="goToLogin()">Login</a>
+        `;
+    }
+}
+
+function goToLogin() {
+    window.location.href = "login.html";
+}
+
+function goToMyBookings() {
+    window.location.href = "myBookings.html";
+}
+
+function logout() {
+    localStorage.clear();
+    alert("Logged out successfully!");
+    window.location.href = "index.html";
+}
+
+// 🔥 run when page loads
+document.addEventListener("DOMContentLoaded", renderAuth);
 loadDining();
 </script>
 

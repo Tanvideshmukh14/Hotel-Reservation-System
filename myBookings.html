@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Bookings</title>
+</head>
+<body>
+
+<h1>My Bookings</h1>
+ <div class="nav-links" id="navLinks">
+     <a href="rooms.html">Back</a>
+
+   <span id="authSection"></span>
+  </div>
+<div id="bookings"></div>
+
+<script>
+    <!-- NAVBAR TOGGLE -->
+function toggleMenu() {
+  document.getElementById("navLinks").classList.toggle("active");
+}
+async function loadBookings() {
+
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+        alert("Please login first!");
+        window.location.href = "login.html";
+        return;
+    }
+
+    try {
+        const res = await fetch(`http://localhost:8080/api/bookings/user/${userId}`);
+        const data = await res.json();
+
+        let html = "";
+
+        if (data.length === 0) {
+            html = "<h3>No bookings found</h3>";
+        } else {
+            data.forEach(b => {
+                html += `
+                <div style="border:1px solid #ccc; margin:10px; padding:10px;">
+                    
+                    <h3>${b.serviceType} - ${b.itemName}</h3>
+                    
+                    <p><b>Price:</b> ₹${b.price}</p>
+                    <p><b>Date:</b> ${b.date}</p>
+
+                    ${b.time ? `<p><b>Time:</b> ${b.time}</p>` : ""}
+                    ${b.guests ? `<p><b>Guests:</b> ${b.guests}</p>` : ""}
+
+                    <button onclick="cancelBooking(${b.id})">
+                        Cancel Booking
+                    </button>
+                </div>`;
+            });
+        }
+
+        document.getElementById("bookings").innerHTML = html;
+
+    } catch (error) {
+        alert("Error loading bookings!");
+        console.error(error);
+    }
+}
+
+
+async function cancelBooking(id) {
+
+    const confirmCancel = confirm("Are you sure you want to cancel?");
+    if (!confirmCancel) return;
+
+    const userId = localStorage.getItem("userId");
+
+    try {
+        const res = await fetch(`http://localhost:8080/api/bookings/${id}/${userId}`, {
+            method: "DELETE"
+        });
+
+        if (!res.ok) throw new Error();
+
+        alert("Booking Cancelled!");
+        loadBookings();
+
+    } catch (error) {
+        alert("Error cancelling booking!");
+        console.error(error);
+    }
+}
+
+loadBookings();
+</script>
+
+</body>
+</html>

@@ -5,7 +5,17 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="booking-page">
+<div class="navbar">
+  <h2 class="logo">Hotel</h2>
 
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+
+  <div class="nav-links" id="navLinks">
+     <a href="rooms.html">Back to Rooms</a>
+
+   <span id="authSection"></span>
+  </div>
+</div>
 <h1 class="section-title">Book Your Room</h1>
 
 <div class="card">
@@ -18,12 +28,8 @@
   <!-- Booking Form -->
   <form id="bookingForm">
     <input type="text" id="name" placeholder="Your Name" required>
-
     <input type="email" id="email" placeholder="Your Email" required>
-
     <input type="date" id="checkIn" required>
-
-    <input type="date" id="checkOut" required>
 
     <!-- Hidden values -->
     <input type="hidden" id="roomType">
@@ -31,22 +37,36 @@
 
     <button type="submit">Confirm Booking</button>
   </form>
-   <hr>
-<br>
-<h2>AI Room Recommendations</h2>
 
-<div style="margin-top:20px;">
-  <input type="number" id="budget" placeholder="Enter Budget (₹)">
-  <input type="number" id="rating" placeholder="Minimum Rating (1-5)">
-  
-  <button onclick="getRecommendations()">Get Recommendations</button>
+  <hr>
+  <br>
+
+  <h2>AI Room Recommendations</h2>
+
+  <div style="margin-top:20px;">
+    <input type="number" id="budget" placeholder="Enter Budget (₹)">
+    <input type="number" id="rating" placeholder="Minimum Rating (1-5)">
+    <button onclick="getRecommendations()">Get Recommendations</button>
+  </div>
+
+  <div id="recommendations" style="margin-top:20px;"></div>
+
 </div>
-
-<div id="recommendations" style="margin-top:20px;"></div>
-</div>
-
 
 <script>
+<!-- NAVBAR TOGGLE -->
+function toggleMenu() {
+  document.getElementById("navLinks").classList.toggle("active");
+}
+
+/* 🔐 LOGIN CHECK */
+const userId = localStorage.getItem("userId");
+
+if (!userId) {
+    alert("⚠️ Please login first!");
+    window.location.href = "login.html";
+}
+
 /* LOAD ROOM DATA */
 const roomName = localStorage.getItem("roomName");
 const roomImage = localStorage.getItem("roomImage");
@@ -67,10 +87,13 @@ document.getElementById("bookingForm").addEventListener("submit", async function
     const booking = {
         name: document.getElementById("name").value,
         email: document.getElementById("email").value,
-        roomType: document.getElementById("roomType").value,
+        userId: parseInt(localStorage.getItem("userId")),
+
+        serviceType: "ROOM",                 // ✅ NEW
+        itemName: document.getElementById("roomType").value, // ✅ NEW
         price: parseFloat(document.getElementById("price").value),
-        checkIn: document.getElementById("checkIn").value,
-        checkOut: document.getElementById("checkOut").value
+
+        date: document.getElementById("checkIn").value // ✅ NEW
     };
 
     try {
@@ -80,7 +103,7 @@ document.getElementById("bookingForm").addEventListener("submit", async function
             body: JSON.stringify(booking)
         });
 
-        if (!res.ok) throw new Error("Server error");
+        if (!res.ok) throw new Error();
 
         await res.json();
 
@@ -88,11 +111,14 @@ document.getElementById("bookingForm").addEventListener("submit", async function
         document.getElementById("bookingForm").reset();
 
     } catch (error) {
-        alert("❌ Backend not running!");
+        alert("❌ Error booking!");
+        console.error(error);
     }
 
 });
 
+
+/* AI RECOMMENDATIONS (UNCHANGED) */
 async function getRecommendations(){
 
     const budget = document.getElementById("budget").value;
@@ -104,7 +130,7 @@ async function getRecommendations(){
     }
 
     try {
-        const res = await fetch("http://localhost:8080/api/ai/recommend", {
+        const res = await fetch("http://localhost:8080/api/bookings/ai/recommend", {
             method: "POST",
             headers: {"Content-Type":"application/json"},
             body: JSON.stringify({
@@ -113,19 +139,37 @@ async function getRecommendations(){
             })
         });
 
+        if (!res.ok) throw new Error("API error");
+
         const data = await res.json();
 
         let html = "<h3>Recommended Rooms:</h3>";
 
-        data.forEach(room => {
-            html += `
-                <div style="border:1px solid #ccc; padding:10px; margin:10px;">
-                    <h4>${room.type}</h4>
-                    <p>Price: ₹${room.price}</p>
-                    <p>Rating: ${room.rating}</p>
-                </div>
-            `;
-        });
+        // ✅ Handle empty results
+        if (data.length === 0) {
+            html += "<p>No matching rooms found 😔</p>";
+        } else {
+
+           data.forEach(item => {
+    html += `
+        <div 
+  onclick="selectRoom(
+    '${item.type || item.name || item.itemName}',
+    ${item.price},
+    '${item.imageUrl}'
+)"
+            style="border:1px solid #ccc; padding:10px; margin:10px; cursor:pointer; transition:0.3s;"
+            onmouseover="this.style.background='#f5f5f5'"
+            onmouseout="this.style.background='white'"
+        >
+            <h4>${item.type || item.name || item.itemName}</h4>
+            <p>Price: ₹${item.price}</p>
+            <p>Rating: ⭐ ${item.rating ?? "N/A"}</p>
+            <p style="color:green;">👉 Click to book</p>
+        </div>
+    `;
+});
+        }
 
         document.getElementById("recommendations").innerHTML = html;
 
@@ -133,6 +177,16 @@ async function getRecommendations(){
         alert("❌ AI service not running!");
         console.error(error);
     }
+}
+function selectRoom(name, price, image) {
+
+    localStorage.setItem("roomName", name);
+    localStorage.setItem("roomPrice", price);
+
+    // ✅ Save real image
+    localStorage.setItem("roomImage", image);
+
+    location.reload();
 }
 </script>
 </body>

@@ -17,7 +17,7 @@
     <a href="rooms.html">Rooms</a>
     <a href="dining.html">Dining</a>
     <a href="spa.html">Spa</a>
-  
+    <span id="authSection"></span>
   </div>
 </div>
 <div id="rooms" class="room-container"></div>
@@ -31,13 +31,22 @@ function toggleMenu() {
 
 <script>
 function bookRoom(name, image, price) {
-  // store data
-  localStorage.setItem("roomName", name);
-  localStorage.setItem("roomImage", image);
-  localStorage.setItem("roomPrice", price);
 
-  // redirect
-  window.location.href = "booking.html";
+    const userId = localStorage.getItem("userId");
+
+    // ❌ Not logged in
+    if (!userId) {
+        alert("⚠️ Please login to book!");
+        window.location.href = "login.html";
+        return;
+    }
+
+    // ✅ Logged in → proceed
+    localStorage.setItem("roomName", name);
+    localStorage.setItem("roomImage", image);
+    localStorage.setItem("roomPrice", price);
+
+    window.location.href = "booking.html";
 }
 async function loadRooms() {
     const res = await fetch("http://localhost:8080/api/rooms");
@@ -61,7 +70,43 @@ async function loadRooms() {
 
     document.getElementById("rooms").innerHTML = html;
 }
+function renderAuth() {
+    const userId = localStorage.getItem("userId");
+    const userName = localStorage.getItem("userName");
 
+    const authDiv = document.getElementById("authSection");
+
+    if (!authDiv) return; // safety
+
+    if (userId) {
+        authDiv.innerHTML = `
+             <a href="myBookings.html">My Bookings</a>
+             <br>
+             <br>
+             <a onClick = "logout()">Logout</a>
+      
+        `;
+    } else {
+        authDiv.innerHTML = `
+            <a onclick="goToLogin()">Login</a>
+        `;
+    }
+}
+
+function goToLogin() {
+    window.location.href = "login.html";
+}
+
+
+
+function logout() {
+    localStorage.clear();
+    alert("Logged out successfully!");
+    window.location.href = "index.html";
+}
+
+// 🔥 run when page loads
+document.addEventListener("DOMContentLoaded", renderAuth);
 loadRooms();
 
 </script>

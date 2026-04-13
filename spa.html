@@ -17,7 +17,7 @@
     <a href="rooms.html">Rooms</a>
     <a href="dining.html">Dining</a>
     <a href="spa.html">Spa</a>
-   
+   <span id="authSection"></span>
   </div>
 </div>
 <div id="spa" class="room-container"></div>
@@ -51,7 +51,63 @@ async function loadSpa() {
 
     document.getElementById("spa").innerHTML = html;
 }
+function bookSpa(name, image, price) {
 
+    const userId = localStorage.getItem("userId");
+
+    // ❌ Not logged in
+    if (!userId) {
+        alert("⚠️ Please login to book!");
+        window.location.href = "login.html";
+        return;
+    }
+
+    // ✅ Logged in → proceed
+    localStorage.setItem("spaName", name);
+    localStorage.setItem("spaImage", image);
+    localStorage.setItem("spaPrice", price);
+
+    window.location.href = "SpaBooking.html";
+}
+function renderAuth() {
+    const userId = localStorage.getItem("userId");
+    const userName = localStorage.getItem("userName");
+
+    const authDiv = document.getElementById("authSection");
+
+    if (!authDiv) return; // safety
+
+    if (userId) {
+        authDiv.innerHTML = `
+             <a href="myBookings.html">My Bookings</a>
+             <br>
+             <br>
+             <a onClick = "logout()">Logout</a>
+        `;
+    } else {
+        authDiv.innerHTML = `
+                       <a onclick="goToLogin()">Login</a>
+
+        `;
+    }
+}
+
+function goToLogin() {
+    window.location.href = "login.html";
+}
+
+function goToMyBookings() {
+    window.location.href = "myBookings.html";
+}
+
+function logout() {
+    localStorage.clear();
+    alert("Logged out successfully!");
+    window.location.href = "index.html";
+}
+
+// 🔥 run when page loads
+document.addEventListener("DOMContentLoaded", renderAuth);
 loadSpa();
 
 </script>
