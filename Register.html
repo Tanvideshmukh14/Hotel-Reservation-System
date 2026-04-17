@@ -2,16 +2,81 @@
 <html>
 <head>
   <title>Register</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      background: url('assets/hotel.jpg') no-repeat center/cover;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .register-box {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 15px;
+      width: 320px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .register-box h2 {
+      margin-bottom: 20px;
+      color: gold;
+    }
+
+    .register-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .register-box button {
+      width: 100%;
+      padding: 10px;
+      background: gold;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .register-box button:hover {
+      background: orange;
+    }
+
+    .register-box a {
+      color: gold;
+      text-decoration: none;
+    }
+
+    .register-box p {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  </style>
 </head>
+
 <body>
 
-<h2>Register</h2>
+<div class="register-box">
+  <h2>Create Account</h2>
 
-<input type="text" id="name" placeholder="Name">
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Password">
+  <input type="text" id="name" placeholder="Full Name">
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
 
-<button onclick="register()">Register</button>
+  <button onclick="register()">Register</button>
+
+  <p>Already have an account? <a href="login.html">Login</a></p>
+</div>
 
 <script>
 async function register() {
